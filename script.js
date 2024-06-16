@@ -21,11 +21,11 @@ function Gameboard() {
 
     // Create the cell objects to fill the board
     function Cell () {
-        let value = "";
+        let value = null; 
 
         function setValue(player) {
             // Check if the cell is empty
-            if (value != "") {
+            if (value != null) {
                 return false;
             }
 
@@ -38,10 +38,8 @@ function Gameboard() {
             return value;
         }
 
+        // Cell return values
         return {
-            // DEBUGGING//
-            value,
-            // DEBUGGING//
             setValue,
             getValue
         }
@@ -70,12 +68,50 @@ function Gameboard() {
     
     // Check winning conditions
     function checkWinner() {
+
+        // Iterate through the rows to check if 3 cells in a row have the same value
+        for (let i = 0; i < gridSize; i++) {
+            if (board[i][0].getValue() === board[i][1].getValue() &&
+                board[i][0].getValue() === board[i][2].getValue() &&
+                board[i][0].getValue() != null) {
+                return true;
+            }
+        }
+
+        // Iterate through the columns to check if 3 cells in a row have the same value
+        for (let j = 0; j < gridSize; j++) {
+            if (board[0][j].getValue() === board[1][j].getValue() &&
+                board[0][j].getValue() === board[2][j].getValue() &&
+                board[0][j].getValue() != null) {
+                return true;
+            }
+        }
+         
         return false;
+    }
+    
+    // Return the board array
+    function getBoard() {
+        debuggingBoard = []
+        for (i = 0; i < gridSize; i++) {
+            debuggingBoard[i] = [];
+            for (j = 0; j < gridSize; j++) {
+                if (board[i][j].getValue() == null) {
+                    debuggingBoard[i].push(board[i][j].getValue());
+                }
+                else {
+                    debuggingBoard[i].push(board[i][j].getValue().symbol); 
+                }
+                
+            }
+        }
+
+        return debuggingBoard;
     }
 
     // Gameboard return values
     return {
-        board,
+        getBoard,
         addToken,
         checkWinner
     }
@@ -97,7 +133,7 @@ function GameController() {
     }
 
     function printBoard() {
-        console.log(board);
+        console.log(board.getBoard());
     }
 
     function playRound(row, column) {
@@ -107,27 +143,32 @@ function GameController() {
 
             // Check for winning condition
             if (board.checkWinner()) {
-                console.log(`${activePlayer} wins`);
+                console.log(`${activePlayer.name} wins`);
+                return;
             }
 
 
             // Switch to next player
             switchPlayer();
+            console.log(`${activePlayer.name}'s turns`)
             printBoard();
             return; 
         }
     }
 
     // Print the initial board
+    console.log(`${activePlayer.name}'s turns`)
     printBoard();
 
     return {
-        // DEBUGGING //
-        board,
-        // DEBUGGING //
         playRound
     }
 
 }
 
 const game = GameController();
+// game.playRound(0,0);
+// game.playRound(1,1);
+// game.playRound(0,1);
+// game.playRound(1,2);
+// game.playRound(0,2);
