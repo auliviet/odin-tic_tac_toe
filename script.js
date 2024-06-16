@@ -144,16 +144,10 @@ function GameController() {
         activePlayer = activePlayer === player1 ? player2 : player1;
     }
 
-    function printBoard() {
-        console.log(board.getBoard());
-    }
-
     function playRound(row, column) {
 
         // Validate input if correct
         if (board.addToken(activePlayer, row, column)) {
-
-            printBoard();
 
             // Check for winning condition
             if (board.checkWinner()) {
@@ -169,17 +163,65 @@ function GameController() {
         }
     }
 
-    // Print the initial board
-    console.log(`${activePlayer.name}'s turns`)
-    printBoard();
-
     return {
-        playRound
+        playRound,
+        getBoard: board.getBoard
     }
 
 }
 
-const game = GameController();
+function ScreenController() {
+    const game = GameController();
+
+    // DEBUGGING
+    game.playRound(0,0);
+    game.playRound(1,1);
+    game.playRound(0,1);
+    game.playRound(1,2);
+    game.playRound(0,2);
+    // END DEBUGGING
+
+    const boardDiv = document.querySelector(".board");
+
+    function displayBoard() {
+        const board = game.getBoard()
+
+        board.forEach((row, rowIndex) => {
+
+            let boardRow = document.createElement("div");
+            boardRow.className = "row";
+
+            row.forEach((cell, cellIndex) => {
+                let boardCell = document.createElement("div");
+                boardCell.className = "cell";
+                boardCell.textContent = board[rowIndex][cellIndex];
+                
+
+                boardRow.append(boardCell);
+            });
+            boardDiv.append(boardRow);
+        });
+    }
+
+    function displayRow(row) {
+        // TO REFACTOR
+    }
+       
+
+    function createCell() {
+        // TO REFACTOR
+    }
+
+
+    return {
+        displayBoard
+    }
+
+}
+
+const screen = ScreenController();
+screen.displayBoard();
+
 // game.playRound(0,0);
 // game.playRound(1,1);
 // game.playRound(0,1);
