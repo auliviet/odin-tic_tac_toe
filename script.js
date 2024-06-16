@@ -86,6 +86,18 @@ function Gameboard() {
                 return true;
             }
         }
+
+        // Iterate throught the diagonals to check if 3 cells in a row have the same value
+        if (board[0][0].getValue() === board[1][1].getValue() &&
+            board[0][0].getValue() === board[2][2].getValue() &&
+            board[0][0].getValue() != null) {
+            return true;
+        }
+        if (board[0][2].getValue() === board[1][1].getValue() &&
+            board[0][2].getValue() === board[2][0].getValue() &&
+            board[0][2].getValue() != null) {
+            return true;
+        }
          
         return false;
     }
@@ -141,6 +153,8 @@ function GameController() {
         // Validate input if correct
         if (board.addToken(activePlayer, row, column)) {
 
+            printBoard();
+
             // Check for winning condition
             if (board.checkWinner()) {
                 console.log(`${activePlayer.name} wins`);
@@ -151,7 +165,6 @@ function GameController() {
             // Switch to next player
             switchPlayer();
             console.log(`${activePlayer.name}'s turns`)
-            printBoard();
             return; 
         }
     }
