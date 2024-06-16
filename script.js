@@ -172,7 +172,7 @@ function GameController() {
 
 function ScreenController() {
     const game = GameController();
-
+    
     // DEBUGGING
     game.playRound(0,0);
     game.playRound(1,1);
@@ -181,37 +181,34 @@ function ScreenController() {
     game.playRound(0,2);
     // END DEBUGGING
 
+    const board = game.getBoard()
+
     const boardDiv = document.querySelector(".board");
 
     function displayBoard() {
-        const board = game.getBoard()
 
         board.forEach((row, rowIndex) => {
-
-            let boardRow = document.createElement("div");
-            boardRow.className = "row";
-
-            row.forEach((cell, cellIndex) => {
-                let boardCell = document.createElement("div");
-                boardCell.className = "cell";
-                boardCell.textContent = board[rowIndex][cellIndex];
-                
-
-                boardRow.append(boardCell);
-            });
-            boardDiv.append(boardRow);
+            createRow(row, rowIndex);
         });
     }
 
-    function displayRow(row) {
-        // TO REFACTOR
-    }
-       
+    function createRow(row, rowIndex) {
+        let boardRow = document.createElement("div");
+            boardRow.className = "row";
 
-    function createCell() {
-        // TO REFACTOR
+            row.forEach((cell, cellIndex) => {
+                boardRow.append(createCell(rowIndex, cellIndex));
+            });
+            boardDiv.append(boardRow);
     }
 
+    function createCell(rowIndex, cellIndex) {
+        let boardCell = document.createElement("div");
+        boardCell.className = "cell";
+        boardCell.textContent = board[rowIndex][cellIndex];
+        
+        return boardCell;
+    }
 
     return {
         displayBoard
