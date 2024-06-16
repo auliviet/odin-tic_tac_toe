@@ -48,7 +48,7 @@ function Gameboard() {
     // Add a token from the player
     function addToken(player, row, column) {
         // Validate the row and column input
-        if (row > gridSize || column > gridSize) {
+        if (row >= gridSize || column >= gridSize) {
             console.log("Not a valid input");
             return false;
         }
