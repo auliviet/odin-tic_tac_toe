@@ -113,21 +113,21 @@ const board = (function(){
 
     // Return the board array with the content of each cell
     function getBoard() {
-        debuggingBoard = []
+        boardWithValues = []
         for (i = 0; i < gridSize; i++) {
-            debuggingBoard[i] = [];
+            boardWithValues[i] = [];
             for (j = 0; j < gridSize; j++) {
                 if (board[i][j].getValue() == null) {
-                    debuggingBoard[i].push(board[i][j].getValue());
+                    boardWithValues[i].push(board[i][j].getValue());
                 }
                 else {
-                    debuggingBoard[i].push(board[i][j].getValue().symbol); 
+                    boardWithValues[i].push(board[i][j].getValue().symbol); 
                 }
                 
             }
         }
 
-        return debuggingBoard;
+        return boardWithValues;
     }
 
     // BOARD RETURN VALUES
