@@ -181,33 +181,45 @@ function ScreenController() {
     game.playRound(0,2);
     // END DEBUGGING
 
-    const board = game.getBoard()
-
-    const boardDiv = document.querySelector(".board");
-
     function displayBoard() {
+        const board = game.getBoard()
+        const boardDiv = document.querySelector(".board");
 
         board.forEach((row, rowIndex) => {
             createRow(row, rowIndex);
         });
+
+        function createRow(row, rowIndex) {
+            let boardRow = document.createElement("div");
+                boardRow.className = "row";
+    
+                row.forEach((cell, cellIndex) => {
+                    boardRow.append(createCell(rowIndex, cellIndex));
+                });
+                boardDiv.append(boardRow);
+        }
+    
+        function createCell(rowIndex, cellIndex) {
+            let newCell = document.createElement("div");
+            newCell.className = `cell ${rowIndex} ${cellIndex}`;
+            newCell.textContent = board[rowIndex][cellIndex];
+            newCell.addEventListener("click", eventPlayRound)
+            
+            return newCell;
+        }    
     }
 
-    function createRow(row, rowIndex) {
-        let boardRow = document.createElement("div");
-            boardRow.className = "row";
-
-            row.forEach((cell, cellIndex) => {
-                boardRow.append(createCell(rowIndex, cellIndex));
-            });
-            boardDiv.append(boardRow);
-    }
-
-    function createCell(rowIndex, cellIndex) {
-        let boardCell = document.createElement("div");
-        boardCell.className = "cell";
-        boardCell.textContent = board[rowIndex][cellIndex];
+    
+    // Events
+    function eventPlayRound(event) {
+        let cellClasses = event.target.className.split(" ");
+            
+        let cellRow = cellClasses[1];
+        let cellColumn = cellClasses[2];
         
-        return boardCell;
+        game.playRound(cellRow, cellColumn);
+        
+        displayBoard();
     }
 
     return {
