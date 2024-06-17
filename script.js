@@ -1,3 +1,8 @@
+/*
+    - Stop input when there is a winner
+    - Get player's name from input
+    - Display winner on page
+*/
 function Players(name, symbol) {
 
     // Players return value
@@ -125,7 +130,7 @@ const board = (function(){
         return debuggingBoard;
     }
 
-    // Board return values
+    // BOARD RETURN VALUES
     return {
         getBoard,
         addToken,
@@ -170,6 +175,7 @@ const gameController = (function () {
         }
     }
 
+    // GAMECONTROLLER RETURN VALUES
     return {
         playRound,
         getBoard: board.getBoard
@@ -214,7 +220,7 @@ const displayController = (function () {
     }
 
     
-    // Events
+    // DISPLAYCONTROLLER EVENT CONTROLLERS
 
     // Initiate the gameController.playRound function when a user clicks on a cell
     function eventPlayRound(event) {
