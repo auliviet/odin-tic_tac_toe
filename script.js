@@ -1,5 +1,4 @@
 /*
-    - Stop input when there is a winner
     - Get player's name from input
     - Display winner on page
 */
@@ -113,21 +112,21 @@ const board = (function(){
 
     // Return the board array with the content of each cell
     function getBoard() {
-        boardWithValues = []
+        boardContent = []
         for (i = 0; i < gridSize; i++) {
-            boardWithValues[i] = [];
+            boardContent[i] = [];
             for (j = 0; j < gridSize; j++) {
                 if (board[i][j].getValue() == null) {
-                    boardWithValues[i].push(board[i][j].getValue());
+                    boardContent[i].push(board[i][j].getValue());
                 }
                 else {
-                    boardWithValues[i].push(board[i][j].getValue().symbol); 
+                    boardContent[i].push(board[i][j].getValue().symbol); 
                 }
                 
             }
         }
 
-        return boardWithValues;
+        return boardContent;
     }
 
     // BOARD RETURN VALUES
@@ -157,9 +156,8 @@ const gameController = (function () {
 
     // Add a token on the board from the active player
     function playRound(row, column) {
-
-        // Validate input if correct
-        if (board.addToken(activePlayer, row, column)) {
+        // Validate input if correct and no player has won yet
+        if (!board.checkWinner() && board.addToken(activePlayer, row, column)) {
 
             // Check for winning condition
             if (board.checkWinner()) {
