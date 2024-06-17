@@ -7,7 +7,7 @@ function Players(name, symbol) {
     }
 }
 
-function Gameboard() {
+const board = (function(){
     const gridSize = 3;
     const board = [];
 
@@ -18,6 +18,7 @@ function Gameboard() {
             board[i].push(new Cell());
         }
     }
+
 
     // Create the cell objects to fill the board
     function Cell () {
@@ -45,6 +46,7 @@ function Gameboard() {
         }
     }
 
+
     // Add a token from the player
     function addToken(player, row, column) {
         // Validate the row and column input
@@ -66,6 +68,7 @@ function Gameboard() {
         }
     }
     
+
     // Check winning conditions
     function checkWinner() {
 
@@ -98,11 +101,12 @@ function Gameboard() {
             board[0][2].getValue() != null) {
             return true;
         }
-         
+        
         return false;
     }
     
-    // Return the board array
+
+    // Return the board array with the content of each cell
     function getBoard() {
         debuggingBoard = []
         for (i = 0; i < gridSize; i++) {
@@ -121,16 +125,16 @@ function Gameboard() {
         return debuggingBoard;
     }
 
-    // Gameboard return values
+    // Board return values
     return {
         getBoard,
         addToken,
         checkWinner
     }
-}
 
-function GameController() {
-    const board = Gameboard();
+}) ();
+
+const gameController = (function () {
     
     let player1Name = "Player 1";
     const player1 = Players(player1Name, "X");
@@ -140,10 +144,13 @@ function GameController() {
     
     let activePlayer = player1;
 
+    // Change active player to let the other player play
     function switchPlayer() {
         activePlayer = activePlayer === player1 ? player2 : player1;
     }
 
+
+    // Add a token on the board from the active player
     function playRound(row, column) {
 
         // Validate input if correct
@@ -168,27 +175,22 @@ function GameController() {
         getBoard: board.getBoard
     }
 
-}
+}) ();
 
-function ScreenController() {
-    const game = GameController();
-    
-    // DEBUGGING
-    game.playRound(0,0);
-    game.playRound(1,1);
-    game.playRound(0,1);
-    game.playRound(1,2);
-    game.playRound(0,2);
-    // END DEBUGGING
+const displayController = (function () {
 
+    // Display the board on the HTML
     function displayBoard() {
-        const board = game.getBoard()
+        const board = gameController.getBoard()
         const boardDiv = document.querySelector(".board");
+        boardDiv.textContent = "";
 
         board.forEach((row, rowIndex) => {
             createRow(row, rowIndex);
         });
 
+
+        // Create a new row on the grid
         function createRow(row, rowIndex) {
             let boardRow = document.createElement("div");
                 boardRow.className = "row";
@@ -199,6 +201,8 @@ function ScreenController() {
                 boardDiv.append(boardRow);
         }
     
+
+        // Create a new cell inside a row
         function createCell(rowIndex, cellIndex) {
             let newCell = document.createElement("div");
             newCell.className = `cell ${rowIndex} ${cellIndex}`;
@@ -211,13 +215,15 @@ function ScreenController() {
 
     
     // Events
+
+    // Initiate the gameController.playRound function when a user clicks on a cell
     function eventPlayRound(event) {
         let cellClasses = event.target.className.split(" ");
             
         let cellRow = cellClasses[1];
         let cellColumn = cellClasses[2];
         
-        game.playRound(cellRow, cellColumn);
+        gameController.playRound(cellRow, cellColumn);
         
         displayBoard();
     }
@@ -226,13 +232,6 @@ function ScreenController() {
         displayBoard
     }
 
-}
+})();
 
-const screen = ScreenController();
-screen.displayBoard();
-
-// game.playRound(0,0);
-// game.playRound(1,1);
-// game.playRound(0,1);
-// game.playRound(1,2);
-// game.playRound(0,2);
+displayController.displayBoard();
