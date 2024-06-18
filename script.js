@@ -1,7 +1,7 @@
 /*
     - Get player's name from input
-    - Display winner on page
 */
+
 function Players(name, symbol) {
 
     // Players return value
@@ -55,13 +55,11 @@ const board = (function(){
     function addToken(player, row, column) {
         // Validate the row and column input
         if (row >= gridSize || column >= gridSize) {
-            console.log("Not a valid input");
             return false;
         }
 
         // Validate the cell is empty
         else if (!board[row][column].setValue(player)) {
-            console.log("This cell is already taken");
             return false;
         }
         
@@ -169,7 +167,6 @@ const gameController = (function () {
 
             // Switch to next player
             switchPlayer();
-            console.log(`${activePlayer.name}'s turns`)
             return; 
         }
     }
