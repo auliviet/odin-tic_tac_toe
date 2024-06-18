@@ -147,6 +147,7 @@ const gameController = (function () {
     const player2 = Players(player2Name, "O");
     
     let activePlayer = player1;
+    let winner = null;
 
     // Change active player to let the other player play
     function switchPlayer() {
@@ -161,7 +162,7 @@ const gameController = (function () {
 
             // Check for winning condition
             if (board.checkWinner()) {
-                console.log(`${activePlayer.name} wins`);
+                winner = activePlayer.name;
                 return;
             }
 
@@ -173,9 +174,14 @@ const gameController = (function () {
         }
     }
 
+    function getWinner() {
+        return winner;
+    };
+
     // GAMECONTROLLER RETURN VALUES
     return {
         playRound,
+        getWinner,
         getBoard: board.getBoard
     }
 
@@ -216,6 +222,15 @@ const displayController = (function () {
             return newCell;
         }    
     }
+    
+    
+    function displayWinner() {
+        if (gameController.getWinner() != null) {
+            let winnerName = gameController.getWinner();
+            let winnerDiv = document.querySelector(".winner");
+            winnerDiv.textContent = `${winnerName} wins`;
+        }
+    }
 
     
     // DISPLAYCONTROLLER EVENT CONTROLLERS
@@ -230,6 +245,7 @@ const displayController = (function () {
         gameController.playRound(cellRow, cellColumn);
         
         displayBoard();
+        displayWinner();
     }
 
     return {
