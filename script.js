@@ -1,15 +1,6 @@
 /*
-    - Get player's name from input
+    - Add reset button
 */
-
-function Players(name, symbol) {
-
-    // Players return value
-    return {
-        name,
-        symbol
-    }
-}
 
 const board = (function(){
     const gridSize = 3;
@@ -138,14 +129,26 @@ const board = (function(){
 
 const gameController = (function () {
     
-    let player1Name = "Player 1";
-    const player1 = Players(player1Name, "X");
+    // Initiate players with default values
+    let player1 = {
+        name: "Player 1",
+        symbol: "X"
+    }
 
-    let player2Name = "Player 2";
-    const player2 = Players(player2Name, "O");
+    let player2 = {
+        name: "Player 2",
+        symbol: "Y"
+    }
     
     let activePlayer = player1;
     let winner = null;
+
+    // Overwrite the default values for player names
+    function setPlayerNames(player1Name, player2Name) {
+        player1.name = player1Name;
+        player2.name = player2Name;
+    }
+
 
     // Change active player to let the other player play
     function switchPlayer() {
@@ -164,7 +167,6 @@ const gameController = (function () {
                 return;
             }
 
-
             // Switch to next player
             switchPlayer();
             return; 
@@ -177,6 +179,7 @@ const gameController = (function () {
 
     // GAMECONTROLLER RETURN VALUES
     return {
+        setPlayerNames,
         playRound,
         getWinner,
         getBoard: board.getBoard
@@ -185,6 +188,14 @@ const gameController = (function () {
 }) ();
 
 const displayController = (function () {
+
+    // Get the names of the player
+    function getPlayerNames() {
+        let submitButton = document.querySelector("#submit");
+        submitButton.addEventListener("click", (event) => {
+            eventSubmitNames(event);
+        });
+    }
 
     // Display the board on the HTML
     function displayBoard() {
@@ -245,10 +256,17 @@ const displayController = (function () {
         displayWinner();
     }
 
-    return {
-        displayBoard
+    // Get the player's name when submitting the form
+    function eventSubmitNames(event) {
+        event.preventDefault(); // prevent reloading the page 
+
+        let player1Name = document.querySelector("#player1").value;
+        let player2Name = document.querySelector("#player2").value;
+
+        gameController.setPlayerNames(player1Name, player2Name);
     }
 
-})();
+    getPlayerNames();
+    displayBoard();
 
-displayController.displayBoard();
+})();
