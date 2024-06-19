@@ -9,25 +9,34 @@
 </head>
 <body>
   <h1>Tic Tac Toe</h1>
-
-  <form>
-    <label for="player1">Player 1 name:</label>
-    <input type="text" name="player1" id="player1">
-
-    <label for="player2">Player 2 name:</label>
-    <input type="text" name="player2" id="player2">
-
-    <button type="submit" id="submit">Submit</button>
-  </form>
-
-  <div class="players">
-    <div class="player1"></div>
-    <div class="player2"></div>
+  
+  <div class="game-wrapper">
+    <form  class="form-wrapper">
+      <div class="form-row">
+        <label for="player1">Player 1</label>
+        <input type="text" name="player1" id="player1" placeholder="Name">
+      </div>
+      <div class="form-row">
+        <label for="player2">Player 2</label>
+        <input type="text" name="player2" id="player2" placeholder="Name">
+      </div>
+      <button type="submit" id="submit">Submit</button>
+    </form>
+    
+    <div class="board-wrapper">
+      <div class="players">
+        <div class="player1"></div>
+        <div class="player2"></div>
+      </div>
+      <div class="board"></div>
+      <div class="winner"></div>
+      
+      <button type="reset" class="reset">Reset</button>
+      
+    </div>
   </div>
+  
 
-  <div class="board"></div>
-  <div class="winner"></div>
-  <button type="reset" class="reset">Reset</button>
   
 </body>
 </html>

@@ -190,6 +190,11 @@ const gameController = (function () {
     function getWinner() {
         return winner;
     };
+    
+    // Reset the winner
+    function resetWinner() {
+        winner = null;
+    }
 
 
     // Return the players of the game
@@ -205,6 +210,7 @@ const gameController = (function () {
         setPlayerNames,
         playRound,
         getWinner,
+        resetWinner,
         getPlayers,
         getBoard: board.getBoard,
         resetBoard: board.resetBoard
@@ -223,6 +229,10 @@ const displayController = (function () {
             // Hide the form
             let form = document.querySelector("form");
             form.style.display = "none";
+
+            // Display the board
+            let boardWrapper = document.querySelector(".board-wrapper");
+            boardWrapper.style.display = "flex";
         });
     }
 
@@ -270,6 +280,11 @@ const displayController = (function () {
             let winnerName = gameController.getWinner();
             let winnerDiv = document.querySelector(".winner");
             winnerDiv.textContent = `${winnerName} wins`;
+            winnerDiv.style.display = "flex";
+
+            // Hide the board
+            let board = document.querySelector(".board");
+            board.style.display = "none";
         }
     }
 
@@ -327,6 +342,16 @@ const displayController = (function () {
         event.preventDefault(); // overwrite the default reset function
         gameController.resetBoard();
         displayBoard();
+
+        // Hide the winner if any
+        let winnerDiv = document.querySelector(".winner");
+        winnerDiv.style.display = "none";
+        gameController.resetWinner();
+
+        // Display the board if hidden
+        let board = document.querySelector(".board");
+        board.style.display = "flex";
+
     }
 
     getPlayerNames();
