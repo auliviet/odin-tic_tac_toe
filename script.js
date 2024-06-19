@@ -163,6 +163,8 @@ const gameController = (function () {
 
             // Check for winning condition
             if (board.checkWinner()) {
+
+                // Set the name of the winning player
                 winner = activePlayer.name;
                 return;
             }
@@ -173,15 +175,27 @@ const gameController = (function () {
         }
     }
 
+
+    // Return the name of the winning player
     function getWinner() {
         return winner;
     };
+
+
+    // Return the players of the game
+    function getPlayers() {
+        return {
+            player1,
+            player2
+        }
+    }
 
     // GAMECONTROLLER RETURN VALUES
     return {
         setPlayerNames,
         playRound,
         getWinner,
+        getPlayers,
         getBoard: board.getBoard
     }
 
@@ -194,6 +208,10 @@ const displayController = (function () {
         let submitButton = document.querySelector("#submit");
         submitButton.addEventListener("click", (event) => {
             eventSubmitNames(event);
+
+            // Hide the form
+            let form = document.querySelector("form");
+            form.style.display = "none";
         });
     }
 
@@ -232,11 +250,33 @@ const displayController = (function () {
     }
     
     
+    // Display the name of the winner on the HTML
     function displayWinner() {
         if (gameController.getWinner() != null) {
             let winnerName = gameController.getWinner();
             let winnerDiv = document.querySelector(".winner");
             winnerDiv.textContent = `${winnerName} wins`;
+        }
+    }
+
+
+    // Display players
+    function displayPlayers() {
+        let players = gameController.getPlayers()
+
+        // Display the players on the page
+        for (player in players) {
+            let playerDiv = document.querySelector(`.${player}`);
+            
+            let name = document.createElement("div");
+            name.className = "player-name";
+            name.textContent = players[player].name;
+            playerDiv.append(name);
+
+            let symbol = document.createElement("div");
+            symbol.className = "player-symbol";
+            symbol.textContent = players[player].symbol;
+            playerDiv.append(symbol);
         }
     }
 
@@ -263,7 +303,9 @@ const displayController = (function () {
         let player1Name = document.querySelector("#player1").value;
         let player2Name = document.querySelector("#player2").value;
 
+        // Display the player names on the page
         gameController.setPlayerNames(player1Name, player2Name);
+        displayPlayers();
     }
 
     getPlayerNames();
