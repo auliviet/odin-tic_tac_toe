@@ -118,11 +118,21 @@ const board = (function(){
         return boardContent;
     }
 
+    // Reset the board
+    function resetBoard() {
+        for (i = 0; i < gridSize; i++) {
+            for (j = 0; j < gridSize; j++) {
+                board[i][j] = new Cell();
+            }
+        }
+    }
+
     // BOARD RETURN VALUES
     return {
         getBoard,
         addToken,
-        checkWinner
+        checkWinner,
+        resetBoard
     }
 
 }) ();
@@ -196,7 +206,8 @@ const gameController = (function () {
         playRound,
         getWinner,
         getPlayers,
-        getBoard: board.getBoard
+        getBoard: board.getBoard,
+        resetBoard: board.resetBoard
     }
 
 }) ();
@@ -224,6 +235,9 @@ const displayController = (function () {
         board.forEach((row, rowIndex) => {
             createRow(row, rowIndex);
         });
+
+        const resetButton = document.querySelector(".reset");
+        resetButton.addEventListener("click", eventReset);
 
 
         // Create a new row on the grid
@@ -306,6 +320,13 @@ const displayController = (function () {
         // Display the player names on the page
         gameController.setPlayerNames(player1Name, player2Name);
         displayPlayers();
+    }
+
+    // Reset the board
+    function eventReset(event) {
+        event.preventDefault(); // overwrite the default reset function
+        gameController.resetBoard();
+        displayBoard();
     }
 
     getPlayerNames();
