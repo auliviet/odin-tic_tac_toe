@@ -83,6 +83,7 @@ h1 {
           display: flex;
           flex-flow: column;
           justify-content: center;
+          box-sizing: border-box;
           border: 2px solid #CACACA;
           text-align: center;
           font-size: 4rem;
