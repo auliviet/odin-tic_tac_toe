@@ -2,7 +2,7 @@
 Exercise for the Odin Project - Full-stack JavaScript on Factory Functions and the Module Pattern
 
 ## Preview link
-[To be added]
+https://auliviet.github.io/odin-tic_tac_toe/
 
 ## Instructions
 - Create a Tic Tac Toe game you can play in your browser.
