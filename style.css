@@ -55,9 +55,13 @@ h1 {
       flex: 0;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(2, max-content);
       gap: 2rem;
       text-align: center;
+
+      & .player-symbol {
+        font-size: 2rem;
+        font-weight: bold;
+      }
     }
 
     & .board {
@@ -65,6 +69,7 @@ h1 {
       display: flex;
       flex-flow: column;
       justify-content: center;
+      position: relative;
  
       & .row {
         display: grid;
@@ -98,7 +103,7 @@ h1 {
         }
       }
 
-      & .row:last-of-type {
+      & .row:nth-last-of-type(2) {
         & .cell {
           border-bottom: none;
         }
@@ -107,14 +112,27 @@ h1 {
 
     & .winner {
       display: none;
-      flex: 1;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
       justify-content: center; 
       align-items: center;
+      background-color: #ffffffbb;
+      font-size: 4rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-align: center;
     }
 
     & .reset {
       flex: 0;
-
+      align-self: center;
+      padding: 1rem 3rem;
+      background-color: #CACACA;
+      border: 1px solid #222;
+      border-radius: .5rem;
+      cursor: pointer;
     }
   }
 

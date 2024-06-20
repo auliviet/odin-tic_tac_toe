@@ -1,7 +1,3 @@
-/*
-    - Add reset button
-*/
-
 const board = (function(){
     const gridSize = 3;
     const board = [];
@@ -147,7 +143,7 @@ const gameController = (function () {
 
     let player2 = {
         name: "Player 2",
-        symbol: "Y"
+        symbol: "O"
     }
     
     let activePlayer = player1;
@@ -246,6 +242,10 @@ const displayController = (function () {
             createRow(row, rowIndex);
         });
 
+        const winnerDiv = document.createElement("div");
+        winnerDiv.className = "winner";
+        boardDiv.append(winnerDiv);
+
         const resetButton = document.querySelector(".reset");
         resetButton.addEventListener("click", eventReset);
 
@@ -281,10 +281,6 @@ const displayController = (function () {
             let winnerDiv = document.querySelector(".winner");
             winnerDiv.textContent = `${winnerName} wins`;
             winnerDiv.style.display = "flex";
-
-            // Hide the board
-            let board = document.querySelector(".board");
-            board.style.display = "none";
         }
     }
 
@@ -347,11 +343,6 @@ const displayController = (function () {
         let winnerDiv = document.querySelector(".winner");
         winnerDiv.style.display = "none";
         gameController.resetWinner();
-
-        // Display the board if hidden
-        let board = document.querySelector(".board");
-        board.style.display = "flex";
-
     }
 
     getPlayerNames();
